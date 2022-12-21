@@ -1,22 +1,26 @@
 # depslib dependency file v1.0
-1669746010 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\main.cpp
+1671305557 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\main.cpp
 	<iostream>
-	"password.cpp"
-	"Login.cpp"
+	<fstream>
+	<string>
 
-1669746250 c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\password.cpp
+1671185755 c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\password.cpp
 	<iostream>
 	<fstream>
 
-1669746102 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\password.cpp
+1671185755 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\password.cpp
 	<iostream>
 	<fstream>
 
-1669746026 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\login.cpp
+1671185833 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\login.cpp
 	<iostream>
 	<fstream>
 
-1669746234 c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\login.cpp
+1671185833 c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\login.cpp
+	<iostream>
+	<fstream>
+
+1671213590 c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\collection.h
 	<iostream>
 	<fstream>
 
