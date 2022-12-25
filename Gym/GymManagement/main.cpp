@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <limits>
+#include <cstdlib>
 #define Max 1000000
 
 using namespace std;
@@ -14,41 +15,42 @@ struct GymMember {
     string payInfo;
 };
 
-int cnt = 1, in = 0, ID = 1;
+int cnt = 1, in = 0;
 
 GymMember G[Max];
 
 void addMemeber() {
+    int id;
     string name, address, phone, info;
+    cout << "Enter ID: ";
+    cin >> id;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cout << "Enter name:\n";
+    cout << "Enter name: ";
     getline(cin, name);
-    cout << "Enter Address:\n";
+    cout << "Enter Address: ";
     getline(cin, address);
-    cout << "Enter Phone Number:\n";
+    cout << "Enter Phone Number: ";
     cin >> phone;
-    cout << "Enter Payment Info:\n";
+    cout << "Enter Payment Info: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, info);
     ofstream file("gymMember.dat", ios::out|ios::app);
-    file << ID++ << "*" << name << "*" << address << "*" << phone << " " << info << "\n";
+    file << id << "*" << name << "*" << address << "*" << phone << " " << info << "\n";
     cout << "Data stored\n";
     file.close();
 }
 
 void StringSeperator(string Data) {
     int s = Data.size(), cnt1 = 0;
-
+    G[in].id = 0;
     for(int i=0; i<s; ++i) {
         if(cnt1==0) {
-            G[i].id = 0;
             if(Data[i]!='*') {
-                G[i].id *= 10;
-                G[i].id += Data[i]-'0';
+                G[in].id *= 10;
+                G[in].id += Data[i]-'0';
             }
             else {
                 ++cnt1;
-                ID = G[i].id+1;
                 continue;
             }
         }
@@ -75,7 +77,7 @@ void StringSeperator(string Data) {
         }
         else G[in].payInfo += Data[i];
     }
-   ++in;
+    ++in;
     ++cnt;
 }
 
@@ -99,11 +101,12 @@ void dataRetrive() {
 }
 
 void display() {
-    for(int i=0; i<cnt-2; ++i)
-        cout << "Name: " << G[i].name << "\n" <<
+    for(int i=0; i<cnt-2; ++i) {
+        cout << "ID: " << G[i].id << "\n" << "Name: " << G[i].name << "\n" <<
         "Address: " << G[i].address << "\n" <<
         "Phone: " << G[i].phone << "\n" <<
         "Payment Information: " << G[i].payInfo << "\n\n";
+    }
 }
 
 void Delete_data() {
@@ -145,6 +148,13 @@ void Delete_Seperately() {
     }
 }
 
+void selection_sort() {
+    for(int i=0; i<cnt-2; ++i)
+        for(int j=i+1; j<cnt-2; ++j)
+            if(G[i].id>G[j].id) swap(G[i], G[j]);
+    cout << "Successfully sorted\n";
+}
+
 
 int main() {
 
@@ -152,7 +162,8 @@ int main() {
 
     while(1) {
         cout << "Add member press 1\nShow all member's info press 2\n" <<
-        "Delete all member's info press 3\nDelete member indiviually press 4\nExit press 5\n";
+        "Delete all member's info press 3\nDelete member individually press 4\nSort the info press 5\n"
+        << "Exit press 6\n";
         cin >> c;
         switch(c) {
             case 1:
@@ -169,6 +180,9 @@ int main() {
                 Delete_Seperately();
                 break;
             case 5:
+                selection_sort();
+                break;
+            case 6:
                 exit(0);
             default:
                 cout << "Wrong Input\n";
