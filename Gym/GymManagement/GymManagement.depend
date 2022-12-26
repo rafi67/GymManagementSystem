@@ -1,10 +1,9 @@
 # depslib dependency file v1.0
-1671968812 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\main.cpp
+1672049110 source:c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\main.cpp
 	<iostream>
 	<fstream>
 	<string>
 	<limits>
-	<cstdlib>
 
 1671185755 c:\users\rafis\desktop\gymmanagementsystem\gym\gymmanagement\password.cpp
 	<iostream>
