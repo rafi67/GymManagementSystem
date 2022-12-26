@@ -21,7 +21,7 @@ int cnt = 1, in = 0;
 GymMember G[Max];
 
 void WriteData() {
-    ofstream file("GymMember.dat");
+    ofstream file("gymMember.dat");
     for(int i=0; i<cnt-2; ++i)
         file << G[i].id << "*" << G[i].name <<"*" << G[i].address << "*" << G[i].phone
         << " " << G[i].payInfo << "\n";
@@ -92,7 +92,6 @@ void StringSeperator(string Data) {
 }
 
 void dataRetrive() {
-    if(cnt==1) dataRetrive();
     ifstream file("gymMember.dat");
     string data;
     if(file.fail()) cout << "failed to open file\n";
@@ -112,6 +111,7 @@ void dataRetrive() {
 }
 
 void display() {
+    if(cnt==1) dataRetrive();
     for(int i=0; i<cnt-2; ++i) {
         cout << "ID: " << G[i].id << "\n" << "Name: " << G[i].name << "\n" <<
         "Address: " << G[i].address << "\n" <<
@@ -121,7 +121,7 @@ void display() {
 }
 
 void Delete_data() {
-    ofstream file("GymMember.dat");
+    ofstream file("gymMember.dat");
     if(file.fail()) cout << "unable to delete data file not found\n";
     else {
         file.close();
