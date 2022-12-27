@@ -6,13 +6,12 @@
 
 using namespace std;
 
-// Member Section
-
 struct GymMember {
     int id;
     string name;
     string address;
     string phone;
+    string email;
     string payInfo;
 };
 
@@ -20,20 +19,32 @@ int cnt = 1, in = 0;
 
 GymMember G[Max];
 
+int getInteger() {
+    int n;
+    cin >> n;
+    while(!cin.good()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Incorrect Input, Please try again!\n";
+        cin >> n;
+    }
+    return n;
+}
+
 void WriteData() {
     ofstream file("gymMember.dat");
     for(int i=0; i<cnt-2; ++i)
         file << G[i].id << "*" << G[i].name <<"*" << G[i].address << "*" << G[i].phone
-        << " " << G[i].payInfo << "\n";
+        << " " << G[i].email << " " << G[i].payInfo << "\n";
     file.close();
     cout << "Data saved successfully\n";
 }
 
 void addMemeber() {
     int id;
-    string name, address, phone, info;
+    string name, address, phone, email, info;
     cout << "Enter ID: ";
-    cin >> id;
+    id = getInteger();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Enter name: ";
     getline(cin, name);
@@ -41,11 +52,13 @@ void addMemeber() {
     getline(cin, address);
     cout << "Enter Phone Number: ";
     cin >> phone;
+    cout << "Enter Email Address: ";
+    cin >> email;
     cout << "Enter Payment Info: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, info);
     ofstream file("gymMember.dat", ios::out|ios::app);
-    file << id << "*" << name << "*" << address << "*" << phone << " " << info << "\n";
+    file << id << "*" << name << "*" << address << "*" << phone << " " << email << " " << info << "\n";
     cout << "Data stored\n";
     file.close();
 }
@@ -85,6 +98,13 @@ void StringSeperator(string Data) {
                 continue;
             }
         }
+        else if(cnt1==4) {
+            if(Data[i]!=' ') G[in].email += Data[i];
+            else {
+                ++cnt1;
+                continue;
+            }
+        }
         else G[in].payInfo += Data[i];
     }
     ++in;
@@ -115,8 +135,10 @@ void display() {
     for(int i=0; i<cnt-2; ++i) {
         cout << "ID: " << G[i].id << "\n" << "Name: " << G[i].name << "\n" <<
         "Address: " << G[i].address << "\n" <<
-        "Phone: " << G[i].phone << "\n" <<
-        "Payment Information: " << G[i].payInfo << "\n\n";
+        "Phone: " << G[i].phone << "\n"
+        << "Email: " << G[i].email << "\n"
+        << "Payment Information: "
+        << G[i].payInfo << "\n\n";
     }
 }
 
@@ -149,6 +171,7 @@ void Delete_Seperately() {
             G[i].name = G[i+1].name;
             G[i].address = G[i+1].address;
             G[i].phone = G[i+1].phone;
+            G[i].email = G[i+1].email;
             G[i].payInfo = G[i+1].payInfo;
         }
         --cnt;
@@ -182,7 +205,7 @@ void selection_sort() {
 
 void updateMember() {
     if(cnt==1) dataRetrive();
-    string name, address, phone, payInfo;
+    string name, address, phone, email, payInfo;
     cout << "Enter name to search: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, name);
@@ -197,21 +220,29 @@ void updateMember() {
     getline(cin, address);
     cout << "Enter Phone number: ";
     cin >> phone;
+    cout << "Enter Email Address: ";
+    cin >> email;
     cout << "Payment Info: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, payInfo);
     G[index].name = name;
     G[index].address = address;
     G[index].phone = phone;
+    G[index].email = email;
     G[index].payInfo = payInfo;
     WriteData();
 }
 
-
-//Equipment Section
-
-
-
+void profile(string name) {
+    int index = Linear_Search(name);
+    if(index!=-1)
+        cout << "Name: " << G[index].name << "\n"
+        << "Address: " << G[index].address << "\n"
+        << "Phone: " << G[index].phone << "\n"
+        << "Email: " << G[index].email << "\n"
+        << "Payment Information: " << G[index].payInfo << "\n";
+    else cout << "Information not found\n";
+}
 
 int main() {
 
@@ -222,7 +253,7 @@ int main() {
         cout << "Add member press 1\nShow all member's info press 2\n" <<
         "Delete all member's info press 3\nDelete member individually press 4\nSort the info press 5\n"
         << "For search press 6\nUpdate Member info press 7\nExit press 8\n";
-        cin >> c;
+        c = getInteger();
         switch(c) {
             case 1:
                 addMemeber();
@@ -243,6 +274,7 @@ int main() {
                 cout << "Enter name for search: ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, name);
+                profile(name);
                 break;
             case 7:
                 updateMember();
